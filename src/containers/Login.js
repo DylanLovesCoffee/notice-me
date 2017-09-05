@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { Button, FormGroup, FormControl, ControlLabel } from "react-bootstrap";
 import "./Login.css";
+import LoaderButton from "../components/LoaderButton.js"
 
 class Login extends Component {
   constructor(props) {
@@ -52,6 +53,9 @@ class Login extends Component {
             bsSize="large"
             disabled={!this.validateForm()}
             type="submit"
+            isLoading={this.state.isLoading}
+            text="Login"
+            loadingText="Logging in…"
           >
             Login
           </Button>
