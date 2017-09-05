@@ -6,7 +6,26 @@ import Routes from "./Routes";
 import RouteNavItem from "./components/RouteNavItem"
 
 class App extends Component {
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      authToken: ""
+    };
+
+    this.userHasAuthenticated = this.userHasAuthenticated.bind(this);
+  }
+
+  userHasAuthenticated(token) {
+    this.setState({authToken: token});
+  }
+
   render() {
+    const childProps = {
+      authToken: this.state.authToken,
+      userHasAuthenticated: this.userHasAuthenticated
+    };
+
     return (
       <div className="App container">
         <Navbar fluid collapseOnSelect>
@@ -23,7 +42,7 @@ class App extends Component {
             </Nav>
           </Navbar.Collapse>
         </Navbar>
-        <Routes />
+        <Routes childProps={childProps} />
       </div>
     );
   }

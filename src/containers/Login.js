@@ -39,7 +39,9 @@ class Login extends Component {
       })
     })
     .then(response => response.json())
-    .then(res => console.log(res))
+    .then(res => this.props.userHasAuthenticated(res.token))
+    // .catch(error => console.log(error))
+
   }
 
   render() {
