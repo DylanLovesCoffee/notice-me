@@ -48,7 +48,7 @@ class Login extends Component {
               onChange={this.handleChange}
             />
           </FormGroup>
-          <Button
+          <LoaderButton
             block
             bsSize="large"
             disabled={!this.validateForm()}
@@ -56,9 +56,7 @@ class Login extends Component {
             isLoading={this.state.isLoading}
             text="Login"
             loadingText="Logging in…"
-          >
-            Login
-          </Button>
+          />
         </form>
       </div>
     )
