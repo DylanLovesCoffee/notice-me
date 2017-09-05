@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Button, FormGroup, FormControl, ControlLabel } from "react-bootstrap";
+import { FormGroup, FormControl, ControlLabel } from "react-bootstrap";
 import "./Login.css";
 import LoaderButton from "../components/LoaderButton.js"
 
@@ -11,6 +11,8 @@ class Login extends Component {
       email: "",
       password: ""
     }
+
+    this.handleSubmit = this.handleSubmit.bind(this);
   }
 
   validateForm() {
@@ -25,6 +27,19 @@ class Login extends Component {
 
   handleSubmit = event => {
     event.preventDefault();
+    fetch('http://localhost:3001/login', {
+      method: 'post',
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        email: this.state.email,
+        password: this.state.password,
+      })
+    })
+    .then(response => response.json())
+    .then(res => console.log(res))
   }
 
   render() {
