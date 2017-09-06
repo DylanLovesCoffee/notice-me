@@ -9,7 +9,8 @@ class Login extends Component {
 
     this.state = {
       email: "",
-      password: ""
+      password: "",
+      error: ""
     }
 
     this.handleSubmit = this.handleSubmit.bind(this);
@@ -39,9 +40,8 @@ class Login extends Component {
       })
     })
     .then(response => response.json())
-    .then(res => this.props.userHasAuthenticated(res.token))
-    // .catch(error => console.log(error))
-
+    .catch(res => this.props.userHasAuthenticated(res.token))
+    .then(r => this.setState({error: r.error}))
   }
 
   render() {
@@ -75,6 +75,7 @@ class Login extends Component {
             loadingText="Logging in…"
           />
         </form>
+        {this.state.error !== "" ? <h5>*{this.state.error}</h5> : null}
       </div>
     )
   }
