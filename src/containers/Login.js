@@ -40,8 +40,8 @@ class Login extends Component {
       })
     })
     .then(response => response.json())
-    .catch(res => this.props.userHasAuthenticated(res.token))
-    .then(r => this.setState({error: r.error}))
+    .then(res => this.props.userHasAuthenticated(res.token))
+    .catch(r => this.setState({error: r.error}))
   }
 
   render() {
@@ -75,7 +75,7 @@ class Login extends Component {
             loadingText="Logging in…"
           />
         </form>
-        {this.state.error !== "" ? <h5>*{this.state.error}</h5> : null}
+        {this.state.error !== "" ? <h5>{this.state.error}</h5> : null}
       </div>
     )
   }

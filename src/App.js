@@ -10,7 +10,7 @@ class App extends Component {
     super(props);
 
     this.state = {
-      authToken: ""
+      authToken: null
     };
 
     this.userHasAuthenticated = this.userHasAuthenticated.bind(this);
@@ -21,7 +21,7 @@ class App extends Component {
   }
 
   handleLogout = event => {
-    this.userHasAuthenticated("");
+    this.userHasAuthenticated(null);
   }
 
   render() {
@@ -42,11 +42,11 @@ class App extends Component {
           <Navbar.Collapse>
             <Nav pullRight>
               {
-                this.state.authToken !== "" ?
-                  <NavItem onClick={this.handleLogout}>Logout</NavItem>
-                  :
-                  [<RouteNavItem key={1} href="/signup">Signup</RouteNavItem>,
-                  <RouteNavItem key={2} href="/login">Login</RouteNavItem>]
+                this.state.authToken == null ?
+                [<RouteNavItem key={1} href="/signup">Signup</RouteNavItem>,
+                <RouteNavItem key={2} href="/login">Login</RouteNavItem>]
+                :
+                <NavItem onClick={this.handleLogout}>Logout</NavItem>
               }
             </Nav>
           </Navbar.Collapse>
