@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
-import { Nav, Navbar } from "react-bootstrap";
+import { NavItem, Nav, Navbar } from "react-bootstrap";
 import "./App.css";
 import Routes from "./Routes";
 import RouteNavItem from "./components/RouteNavItem"
@@ -20,6 +20,10 @@ class App extends Component {
     this.setState({authToken: token});
   }
 
+  handleLogout = event => {
+    this.userHasAuthenticated("");
+  }
+
   render() {
     const childProps = {
       authToken: this.state.authToken,
@@ -37,8 +41,13 @@ class App extends Component {
           </Navbar.Header>
           <Navbar.Collapse>
             <Nav pullRight>
-              <RouteNavItem href="/signup">Signup</RouteNavItem>
-              <RouteNavItem href="/login">Login</RouteNavItem>
+              {
+                this.state.authToken !== "" ?
+                  <NavItem onClick={this.handleLogout}>Logout</NavItem>
+                  :
+                  [<RouteNavItem key={1} href="/signup">Signup</RouteNavItem>,
+                  <RouteNavItem key={2} href="/login">Login</RouteNavItem>]
+              }
             </Nav>
           </Navbar.Collapse>
         </Navbar>
