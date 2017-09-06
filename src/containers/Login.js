@@ -28,6 +28,7 @@ class Login extends Component {
 
   handleSubmit = event => {
     event.preventDefault();
+    this.props.history.push("/");
     fetch('http://localhost:3001/login', {
       method: 'post',
       headers: {
