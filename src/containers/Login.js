@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Button, FormGroup, FormControl, ControlLabel } from "react-bootstrap";
+import { FormGroup, FormControl, ControlLabel } from "react-bootstrap";
 import "./Login.css";
 import LoaderButton from "../components/LoaderButton.js"
 
@@ -9,8 +9,11 @@ class Login extends Component {
 
     this.state = {
       email: "",
-      password: ""
+      password: "",
+      error: ""
     }
+
+    this.handleSubmit = this.handleSubmit.bind(this);
   }
 
   validateForm() {
@@ -25,6 +28,21 @@ class Login extends Component {
 
   handleSubmit = event => {
     event.preventDefault();
+    this.props.history.push("/");
+    fetch('http://localhost:3001/login', {
+      method: 'post',
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        email: this.state.email,
+        password: this.state.password,
+      })
+    })
+    .then(response => response.json())
+    .then(res => this.props.userHasAuthenticated(res.token))
+    .catch(r => this.setState({error: r.error}))
   }
 
   render() {
@@ -48,7 +66,7 @@ class Login extends Component {
               onChange={this.handleChange}
             />
           </FormGroup>
-          <Button
+          <LoaderButton
             block
             bsSize="large"
             disabled={!this.validateForm()}
@@ -56,10 +74,9 @@ class Login extends Component {
             isLoading={this.state.isLoading}
             text="Login"
             loadingText="Logging in…"
-          >
-            Login
-          </Button>
+          />
         </form>
+        {this.state.error !== "" ? <h5>{this.state.error}</h5> : null}
       </div>
     )
   }
